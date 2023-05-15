@@ -8,11 +8,11 @@ export const validatePassword = (
 ) => {
 	const password = req.body.password
 
-	if(!password){
+	if (!password) {
 		res.status(400).send('Password is required')
 		return
 	}
-	
+
 	if (password.length < 8 || password.length > 40) {
 		res.status(400).send('Password must be between 8 and 40 characters')
 		return
@@ -30,5 +30,20 @@ export const validatePassword = (
 		return
 	}
 
+	next()
+}
+
+export const generateUsername = (
+	req: Request,
+	res: Response,
+	next: NextFunction
+) => {
+	const name = req.body.name
+	if (!name) {
+		res.status(400).send('Name is required')
+		return
+	}
+
+	req.body.username = `${name.split(' ').join('-')}`
 	next()
 }
