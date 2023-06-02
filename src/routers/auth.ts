@@ -1,12 +1,7 @@
-// Importing helper modules
 import { Router } from 'express'
 import { createHmac } from 'crypto'
 import dotenv from 'dotenv'
 import sql_connection from '../utilities/mysql'
-
-dotenv.config()
-
-// Importing controllers
 import {
 	authenticateUser,
 	generateUsername,
@@ -14,11 +9,11 @@ import {
 } from '../controllers/auth'
 import { validateToken } from '../utilities/modules'
 
-// Initializing router
-const  authRouter = Router()
+dotenv.config()
 
-// Defining routes
- authRouter.get('/', (_, res) => {
+const authRouter = Router()
+
+authRouter.get('/', (_, res) => {
 	sql_connection.query(
 		'SELECT username,email,password,balance FROM USERS',
 		(error, results) => {
@@ -33,7 +28,7 @@ const  authRouter = Router()
 	sql_connection.end()
 })
 
- authRouter.post(
+authRouter.post(
 	'/register',
 	validatePassword,
 	generateUsername,
@@ -48,9 +43,9 @@ const  authRouter = Router()
 
 				sql_connection.execute(
 					`
-				INSERT INTO USERS (name, email, username, password)
-				VALUES ('${name}', '${email}', '${username}', '${hashedPassword}')
-				`,
+          INSERT INTO USERS (name, email, username, password)
+          VALUES ('${name}', '${email}', '${username}', '${hashedPassword}')
+          `,
 					(error) => {
 						if (error) {
 							res.status(500).send(error.message)
@@ -69,11 +64,11 @@ const  authRouter = Router()
 	}
 )
 
- authRouter.post('/login', authenticateUser, (req, res) => {
+authRouter.post('/login', authenticateUser, (req, res) => {
 	res.status(200).send(req.body)
 })
 
- authRouter.post('/verify-session', (req, res) => {
+authRouter.post('/verify-session', (req, res) => {
 	if (!req.body.token) {
 		res.status(400).send('Token missing in body')
 		return
@@ -87,4 +82,4 @@ const  authRouter = Router()
 	}
 })
 
-export default  authRouter
+export default authRouter

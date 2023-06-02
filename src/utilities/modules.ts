@@ -26,10 +26,13 @@ export function generateToken(data: TokenPayload) {
 export function validateToken(token: string): TokenVerificationResult {
 	const result: TokenVerificationResult = {
 		validity: false,
-		payload: null
+		payload: null,
 	}
 	try {
-		const payload = jwt.verify(token, process.env.app_secret!) as JWTTokenPayload
+		const payload = jwt.verify(
+			token,
+			process.env.app_secret!
+		) as JWTTokenPayload
 		result.validity = true
 		result.payload = payload
 	} catch (error) {
@@ -37,4 +40,21 @@ export function validateToken(token: string): TokenVerificationResult {
 	}
 
 	return result
+}
+
+export const formatDate = (
+	dateString: string
+): { date: string; time: string } => {
+	const dateObj = new Date(dateString)
+
+	const formattedDate = dateObj.toISOString().split('T')[0]
+
+	const formattedTime = dateObj.toLocaleTimeString('en-US', {
+		hour: '2-digit',
+		minute: '2-digit',
+		second: '2-digit',
+		hour12: false,
+	})
+
+	return { date: formattedDate, time: formattedTime }
 }

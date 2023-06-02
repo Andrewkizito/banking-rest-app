@@ -10,6 +10,7 @@ const sql_connection = mysql.createConnection({
 	user: process.env.db_user,
 	password: process.env.db_password,
 	host: process.env.db_host,
+	multipleStatements: true
 })
 
 export default sql_connection

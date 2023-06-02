@@ -13,7 +13,7 @@ export interface TokenPayload {
 }
 
 export interface JWTTokenPayload {
-	id: string
+	id: number
 	username: string
 	email: string
 	iat: number
@@ -30,10 +30,11 @@ export interface Transaction {
 	id: number
 	amount: number
 	message: string
+	transaction_date: string
 	transaction_type: 'withdraw' | 'deposit' | 'sent' | 'recieved'
 	owner_id: number
 	account_from?: string | null
 	account_to?: string | null
-	balance: number
+	balance?: number
 	new_balance: number
 }

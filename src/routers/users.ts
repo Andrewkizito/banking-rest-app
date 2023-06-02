@@ -4,7 +4,7 @@ import dotenv from 'dotenv'
 
 // Importing controllers
 import { validateSession } from '../controllers/auth'
-import { getUserTransactions } from '../controllers/users'
+import { depositFinances, getAccountSummary } from '../controllers/users'
 
 dotenv.config()
 
@@ -14,10 +14,14 @@ const usersRouter = Router()
 usersRouter.get(
 	'/account-summary',
 	validateSession,
-	getUserTransactions,
+	getAccountSummary,
 	(req, res) => {
 		res.status(200).send(req.body)
 	}
 )
+
+usersRouter.post('/deposit', validateSession, depositFinances, (req, res) => {
+	res.status(200).send(req.body)
+})
 
 export default usersRouter
