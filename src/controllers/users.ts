@@ -25,7 +25,6 @@ export const getAccountSummary = (
 			if (error) {
 				logger.error(error)
 				res.status(500).send(error)
-				sql_connection.end()
 				return
 			}
 
@@ -73,7 +72,6 @@ export const getAccountSummary = (
 
 			req.body = payload
 			next()
-			sql_connection.end()
 		}
 	)
 }
@@ -105,7 +103,6 @@ export const depositFinances = (req: Request, res: Response) => {
 				res.status(500).send(error.message)
 				sql_connection.rollback(() => {
 					logger.error('Transaction rolled back')
-					sql_connection.end()
 				})
 				return
 			}
@@ -115,7 +112,6 @@ export const depositFinances = (req: Request, res: Response) => {
 			const transactionDate = `${formatDate(new Date().toISOString()).date} ${
 				formatDate(new Date().toISOString()).time
 			}`
-			console.log(transactionDate)
 
 			const payload: Transaction = {
 				id: 1,
@@ -132,7 +128,6 @@ export const depositFinances = (req: Request, res: Response) => {
 				if (err) {
 					logger.error(err)
 					res.status(500).send(err.message)
-					sql_connection.end()
 					return
 				}
 
@@ -152,7 +147,6 @@ export const depositFinances = (req: Request, res: Response) => {
 						res.status(500).send(err.message)
 						sql_connection.rollback(() => {
 							logger.error('Transaction rolled back')
-							sql_connection.end()
 						})
 						return
 					}
@@ -162,7 +156,6 @@ export const depositFinances = (req: Request, res: Response) => {
 							logger.error(err)
 							sql_connection.rollback(() => {
 								logger.error('Transaction rolled back')
-								sql_connection.end()
 							})
 							res.status(500).send(err.message)
 							return
@@ -174,7 +167,6 @@ export const depositFinances = (req: Request, res: Response) => {
 						console.log(`Heap total: ${heapTotalMB.toFixed(2)} MB`)
 						console.log(`Heap used: ${heapUsedMB.toFixed(2)} MB`)
 						res.status(200).send('Balance has been updated')
-						sql_connection.end()
 					})
 				})
 			})
