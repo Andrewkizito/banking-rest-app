@@ -54,7 +54,6 @@ authRouter.post(
 						}
 					}
 				)
-				sql_connection.end()
 			} catch (error) {
 				res.status(500).send(error.message)
 			}

@@ -4,7 +4,11 @@ import dotenv from 'dotenv'
 
 // Importing controllers
 import { validateSession } from '../controllers/auth'
-import { depositFinances, getAccountSummary } from '../controllers/users'
+import {
+	depositFinances,
+	getAccountSummary,
+	getTransactions,
+} from '../controllers/users'
 
 dotenv.config()
 
@@ -15,6 +19,15 @@ usersRouter.get(
 	'/account-summary',
 	validateSession,
 	getAccountSummary,
+	(req, res) => {
+		res.status(200).send(req.body)
+	}
+)
+
+usersRouter.get(
+	'/transactions',
+	validateSession,
+	getTransactions,
 	(req, res) => {
 		res.status(200).send(req.body)
 	}

@@ -173,3 +173,32 @@ export const depositFinances = (req: Request, res: Response) => {
 		})
 	})
 }
+
+export const getTransactions = (
+	req: Request,
+	res: Response,
+	next: NextFunction
+) => {
+	const { id } = req.body.token_payload as JWTTokenPayload
+
+	if (!id) {
+		res.status(400).send('Token has no ID encoded')
+		return
+	}
+
+	sql_connection.query(
+		'SELECT id,transaction_type,transaction_date,message,amount FROM TRANSACTIONS WHERE owner_id = ?',
+		id,
+		(error, results) => {
+			if (error) {
+				logger.error(error)
+				res.status(500).send(error.message)
+				return
+			}
+
+			req.body = results
+			next()
+			return
+		}
+	)
+}

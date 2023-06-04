@@ -31,7 +31,7 @@ export interface Transaction {
 	amount: number
 	message: string
 	transaction_date: string
-	transaction_type: 'withdraw' | 'deposit' | 'sent' | 'recieved'
+	transaction_type: 'withdraw' | 'deposit' | 'transfer'
 	owner_id: number
 	account_from?: string | null
 	account_to?: string | null

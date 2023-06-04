@@ -35,3 +35,7 @@
 {"fatal":true,"level":"error"}
 {"fatal":true,"level":"error"}
 {"fatal":true,"level":"error"}
+{"code":"ER_BAD_FIELD_ERROR","errno":1054,"level":"error","sql":"INSERT INTO TRANSACTIONS (owner_id, message, new_balance, amount, transaction_type, transaction_date) VALUES (1, 'Amount of $1000 was deposited to your account at 2023-06-03 11:32:39', 1000, 1000, 'deposit', '2023-06-03 11:32:39')","sqlMessage":"Unknown column 'transaction_date' in 'field list'","sqlState":"42S22"}
+{"level":"error","message":"Transaction rolled back"}
+{"level":"error","message":"Sun Jun 04 2023 06:11:05 GMT+0300 (East Africa Time) - TokenExpiredError: jwt expired"}
+{"level":"error","message":"Sun Jun 04 2023 06:11:10 GMT+0300 (East Africa Time) - TokenExpiredError: jwt expired"}
